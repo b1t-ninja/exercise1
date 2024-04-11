@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import java.io.PrintWriter;
 
+private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
+
 public class MainActivity extends AbstractMessageSender {
     private PushClient.IOHandler mIOHandler;
 
@@ -31,7 +33,7 @@ public class MainActivity extends AbstractMessageSender {
             }
         };
 
-        new PushClient(mIOHandler).connect();
+        mExecutor.execute(new PushClient(mIOHandler)::connect);
     }
 
     @Override
